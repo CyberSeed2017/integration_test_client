@@ -1,44 +1,30 @@
 import requests
 import json
 
-URL = 'http://127.0.0.1:8000/api/'
+base_url = 'http://127.0.0.1:8000/api/'
 
-def insert(payload):
-    url = 'http://127.0.0.1:8000/api/Doctor/'
+def insert(payload, service):
+    url = base_url + service'
     #payload = {'some': 'data'}
     headers = {'content-type': 'application/json'}
     response = requests.post(url, data=json.dumps(payload), headers=headers, allow_redirects=False)
     #print(response)
     location = response.headers['Location']
     print(location)
-    g(location)
-
-    
-    '''
-    print(response.request.body)
-    print(response.request.headers)
-    for resp in response.history:
-        print resp.status_code, resp.url
-    '''
-    
+    return location
 
 def g(resource_uri):
     response = requests.get("http://127.0.0.1:8000" + resource_uri)
     data = response.json()
     print (data)
     print data['id']
-    #print(response)
 #
 
-#create a doctor
-jsonData = {"Practice_Address": "UNF4", "Practice_Name": "Moussa4","Recovery_Phrase": "Test4"}
-insert(jsonData)
+### INTEGRATION TEST SCENARIOS ###
 
-#data = json.loads(jsonData)
-#req.add_header('Content-Type', 'application/xml; charset=utf-8')
-#r = requests.post(URL + "Doctor/", data, headers='{"content-type": "application/json"}')
+#1 /createDoctor
+payload = {"Practice_Address": "Taylor", "Practice_Name": "Taylor","Recovery_Phrase": "Taylor"}
+loc = insert(payload, "Doctor/")
+g(location)
 
-#print(r)
-
-#print(r.status_code, r.reason)
     
